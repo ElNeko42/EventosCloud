@@ -40,7 +40,7 @@ function QueueCard({ q }) {
 function AgentRow({ a }) {
   const activo = a.estado === "activo";
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "13px 16px", borderBottom: "1px solid var(--border)" }}>
+    <div className="agent-row" style={{ display: "flex", alignItems: "center", gap: 14, padding: "13px 16px", borderBottom: "1px solid var(--border)" }}>
       <span style={{ flex: "none", width: 34, height: 34, borderRadius: 8, background: activo ? "var(--accent-soft)" : "var(--surface-2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <I.cpu size={17} style={{ color: activo ? "var(--accent)" : "var(--text-faint)" }} />
       </span>
@@ -80,7 +80,7 @@ export default function Pipeline() {
 
   return (
     <div className="fade-up" style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12 }}>
+      <div className="stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12 }}>
         <StatTile label="Procesadas hoy" value={data.metricas.procesadasHoy.toLocaleString("es")} sub="ritmo 21/min" color="var(--accent)" icon={I.layers} spark={data.metricas.throughput24h} />
         <StatTile label="Latencia media" value={data.metricas.latenciaMedia} sub="end-to-end" color="var(--pos)" icon={I.clock} />
         <StatTile label="Uptime 30d" value={data.metricas.uptime} sub="SLA 99.9%" color="var(--pos)" icon={I.check} />
@@ -94,12 +94,12 @@ export default function Pipeline() {
           <span style={{ flex: 1 }} />
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="dot pulse" style={{ background: "var(--pos)", color: "var(--pos)" }} /><span className="mono" style={{ fontSize: 10.5, color: "var(--pos)" }}>en vivo</span></span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 12 }}>
+        <div className="queue-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 12 }}>
           {data.colas.map((q) => <QueueCard key={q.id} q={q} />)}
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.55fr) minmax(0,1fr)", gap: 22, alignItems: "start" }}>
+      <div className="split-main" style={{ display: "grid", gridTemplateColumns: "minmax(0,1.55fr) minmax(0,1fr)", gap: 22, alignItems: "start" }}>
         <div className="card" style={{ overflow: "hidden" }}>
           <div style={{ padding: "14px 16px", borderBottom: "1px solid var(--border)", display: "flex", alignItems: "center", gap: 10 }}>
             <I.cpu size={16} style={{ color: "var(--accent)" }} />

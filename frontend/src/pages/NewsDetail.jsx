@@ -32,7 +32,7 @@ export default function NewsDetail({ n, noticias = [], onBack, onOpen }) {
     <div className="fade-up" style={{ maxWidth: 1180, margin: "0 auto" }}>
       <button className="btn btn-ghost btn-sm" onClick={onBack} style={{ marginBottom: 20 }}><I.back size={15} /> Volver al feed</button>
 
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }}>
+      <div className="split-main detail-main" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }}>
         <article>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
             {n.sectores.map((s) => <span key={s} className="badge badge-accent">{SECTORS[s]?.label || s}</span>)}

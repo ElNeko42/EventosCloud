@@ -333,9 +333,101 @@ h2 { white-space: nowrap; }
 .alert-title { transition: color 0.15s var(--ease); cursor: pointer; }
 .alert-title:hover { color: var(--accent); }
 
-/* responsive */
+/* ============================================================
+   RESPONSIVE
+   ─ ≥1080px : full sidebar
+   ─ 720–1080 : icon rail
+   ─ ≤900px  : split layouts stack
+   ─ ≤720px  : phone — sidebar becomes a slide-in drawer (top hamburger)
+   ============================================================ */
+
+/* hamburger + drawer backdrop: hidden on desktop, shown on phones */
+.nav-toggle { display: none; }
+.nav-backdrop { display: none; }
+
+/* ---- icon rail (tablet / narrow desktop) ---- */
 @media (max-width: 1080px) {
   .app-shell { grid-template-columns: 64px 1fr; }
   .sidebar .nav-item span:not(.nav-badge), .sidebar .eyebrow, .sidebar-user > div, .sidebar-user > button { display: none; }
   .sidebar-user { justify-content: center; }
+}
+
+/* ---- stack two-column layouts ---- */
+@media (max-width: 900px) {
+  .split-main { grid-template-columns: minmax(0, 1fr) !important; }
+  .split-main aside, .detail-main aside { position: static !important; }
+  .detail-main { gap: 24px !important; }
+  .queue-grid { grid-template-columns: repeat(3, 1fr) !important; }
+  .topbar { padding: 0 20px; }
+  .app-content { padding: 22px 20px 60px; }
+}
+
+/* ---- phone: bottom tab bar + compact chrome ---- */
+@media (max-width: 720px) {
+  /* single column; the sidebar becomes an off-canvas drawer */
+  .app-shell { grid-template-columns: 1fr; }
+  .nav-toggle { display: inline-flex; }
+
+  .sidebar {
+    position: fixed; top: 0; bottom: 0; left: 0;
+    width: 264px; max-width: 84vw; height: 100%;
+    z-index: 70; overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.28s var(--ease);
+    box-shadow: var(--shadow-lg);
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  .nav-backdrop {
+    display: block; position: fixed; inset: 0; z-index: 65;
+    background: oklch(0 0 0 / 0.45);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.25s var(--ease), visibility 0.25s var(--ease);
+  }
+  .nav-backdrop.on { opacity: 1; visibility: visible; }
+
+  /* drawer shows the FULL sidebar — undo the icon-rail collapse */
+  .sidebar .eyebrow { display: block; }
+  .sidebar .nav-item span:not(.nav-badge) { display: block; }
+  .sidebar-user { justify-content: flex-start; }
+  .sidebar-user > div { display: block; }
+  .sidebar-user > button { display: inline-flex; }
+
+  /* compact topbar */
+  .topbar { padding: 0 14px; height: 54px; gap: 10px; }
+  .topbar h1 { font-size: 15px; }
+  .topbar-desc, .topbar-kbd { display: none !important; }
+  .topbar-live { height: 26px !important; }
+
+  /* content: tighter padding */
+  .app-content { padding: 16px 14px 48px; }
+
+  /* stat tiles + queues: two up */
+  .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .queue-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* dense rows wrap instead of overflowing */
+  .agent-row, .source-row { flex-wrap: wrap !important; gap: 9px 16px !important; }
+  .agent-row > div, .source-row > div { text-align: left !important; min-width: 0 !important; }
+  .source-add { flex-wrap: wrap; }
+  .source-add .btn { width: 100%; }
+
+  /* chat: hide side panel, fill the screen, keep input above the nav */
+  .chat-main { grid-template-columns: 1fr !important; height: calc(100dvh - 132px) !important; }
+  .chat-main aside { display: none !important; }
+  .cita-grid { grid-template-columns: 1fr !important; }
+
+  /* login: drop decorative brand panel, form goes full width */
+  .login-grid { grid-template-columns: 1fr !important; }
+  .login-brand { display: none !important; }
+
+  /* tame oversized editorial headlines */
+  .app-content article h1.serif { font-size: 27px !important; }
+  .app-content article h3.serif { font-size: 18px !important; }
+}
+
+/* ---- very small phones ---- */
+@media (max-width: 460px) {
+  .queue-grid { grid-template-columns: 1fr !important; }
+  .app-content article h1.serif { font-size: 24px !important; }
 }

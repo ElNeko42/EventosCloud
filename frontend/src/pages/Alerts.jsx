@@ -70,7 +70,7 @@ export default function Alerts({ noticias = [], onOpen }) {
   const enviadas = alertas.filter((a) => a.estado === "enviada").length;
 
   return (
-    <div className="fade-up" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 22, alignItems: "start" }}>
+    <div className="fade-up split-main" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 22, alignItems: "start" }}>
       <div>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 18 }}>
           <h2 style={{ fontSize: 18, fontWeight: 800, letterSpacing: "-0.02em" }}>Alertas críticas</h2>

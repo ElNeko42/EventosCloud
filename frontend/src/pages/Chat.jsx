@@ -68,7 +68,7 @@ function Bubble({ m, noticias, onOpen }) {
             <div className="eyebrow" style={{ marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
               <I.layers size={12} /> {m.citas.length} fuentes recuperadas · qdrant
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            <div className="cita-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
               {m.citas.map((c) => <CitaCard key={c.id} c={c} noticias={noticias} onOpen={onOpen} />)}
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function Chat({ noticias = [], onOpen }) {
   ];
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 280px", gap: 22, height: "calc(100vh - 132px)", alignItems: "stretch" }}>
+    <div className="chat-main" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 280px", gap: 22, height: "calc(100vh - 132px)", alignItems: "stretch" }}>
       <div className="card" style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div style={{ padding: "14px 20px", borderBottom: "1px solid var(--border)", display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 9 }}>

@@ -36,9 +36,9 @@ export default function Login({ onLogin, theme, toggleTheme }) {
   const sc = { crit: "var(--crit)", ok: "var(--pos)", warn: "var(--neu)", info: "var(--text-faint)" };
 
   return (
-    <div style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1.05fr 0.95fr" }}>
+    <div className="login-grid" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1.05fr 0.95fr" }}>
       {/* ---- panel de marca ---- */}
-      <div className="grid-bg" style={{
+      <div className="grid-bg login-brand" style={{
         position: "relative", background: "var(--bg-sunken)", borderRight: "1px solid var(--border)",
         padding: "48px 56px", display: "flex", flexDirection: "column", justifyContent: "space-between", overflow: "hidden",
       }}>

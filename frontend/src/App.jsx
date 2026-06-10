@@ -20,32 +20,36 @@ const NAV = [
   { id: "fuentes",  label: "Fuentes",   icon: I.rss,   desc: "RSS y cron" },
 ];
 
-function Sidebar({ route, go, user, onLogout }) {
+function Sidebar({ route, go, user, onLogout, open }) {
   const initials = (user?.name || "U").split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
   return (
-    <nav className="sidebar">
-      <div style={{ padding: "20px 18px 22px" }}><Logo size={28} /></div>
+    <nav className={"sidebar" + (open ? " open" : "")}>
+      <div className="sidebar-logo" style={{ padding: "20px 18px 22px" }}><Logo size={28} /></div>
 
-      <div style={{ padding: "0 12px", flex: 1, display: "flex", flexDirection: "column", gap: 3 }}>
-        <div className="eyebrow" style={{ padding: "8px 10px 6px" }}>navegación</div>
-        {NAV.map((n) => (
-          <button key={n.id} onClick={() => go(n.id)} className={"nav-item" + (route === n.id ? " on" : "")}>
-            <n.icon size={17} />
-            <span style={{ flex: 1, textAlign: "left" }}>{n.label}</span>
-            {n.badge && <span className="nav-badge">{n.badge}</span>}
-          </button>
-        ))}
-
-        <div className="eyebrow" style={{ padding: "18px 10px 6px" }}>estado del sistema</div>
-        <div style={{ padding: "0 10px", display: "flex", flexDirection: "column", gap: 9 }}>
-          {[["Orquestador", "var(--pos)", "operativo"], ["Cola ingest", "var(--accent)", "1.2k"], ["Agentes IA", "var(--pos)", "5/6"], ["Dead-letter", "var(--neu)", "17"]].map(([l, c, v]) => (
-            <div key={l} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12 }}>
-              <span className={"dot" + (l === "Orquestador" ? " pulse" : "")} style={{ background: c, color: c }} />
-              <span style={{ color: "var(--text-muted)", whiteSpace: "nowrap" }}>{l}</span>
-              <span style={{ flex: 1 }} />
-              <span className="mono" style={{ fontSize: 10.5, color: "var(--text-faint)" }}>{v}</span>
-            </div>
+      <div className="sidebar-body" style={{ padding: "0 12px", flex: 1, display: "flex", flexDirection: "column", gap: 3 }}>
+        <div className="eyebrow sidebar-cap" style={{ padding: "8px 10px 6px" }}>navegación</div>
+        <div className="sidebar-nav" style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+          {NAV.map((n) => (
+            <button key={n.id} onClick={() => go(n.id)} className={"nav-item" + (route === n.id ? " on" : "")}>
+              <n.icon size={17} />
+              <span style={{ flex: 1, textAlign: "left" }}>{n.label}</span>
+              {n.badge && <span className="nav-badge">{n.badge}</span>}
+            </button>
           ))}
+        </div>
+
+        <div className="sidebar-status">
+          <div className="eyebrow" style={{ padding: "18px 10px 6px" }}>estado del sistema</div>
+          <div style={{ padding: "0 10px", display: "flex", flexDirection: "column", gap: 9 }}>
+            {[["Orquestador", "var(--pos)", "operativo"], ["Cola ingest", "var(--accent)", "1.2k"], ["Agentes IA", "var(--pos)", "5/6"], ["Dead-letter", "var(--neu)", "17"]].map(([l, c, v]) => (
+              <div key={l} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12 }}>
+                <span className={"dot" + (l === "Orquestador" ? " pulse" : "")} style={{ background: c, color: c }} />
+                <span style={{ color: "var(--text-muted)", whiteSpace: "nowrap" }}>{l}</span>
+                <span style={{ flex: 1 }} />
+                <span className="mono" style={{ fontSize: 10.5, color: "var(--text-faint)" }}>{v}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -61,23 +65,26 @@ function Sidebar({ route, go, user, onLogout }) {
   );
 }
 
-function Topbar({ route, theme, toggleTheme }) {
+function Topbar({ route, theme, toggleTheme, onMenu }) {
   const cur = NAV.find((n) => n.id === route) || NAV[0];
   return (
     <header className="topbar">
+      <button className="btn btn-ghost btn-icon btn-sm nav-toggle" onClick={onMenu} title="Menú" aria-label="Abrir menú">
+        <I.menu size={17} />
+      </button>
       <div>
         <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
           <h1 style={{ fontSize: 17, fontWeight: 800, letterSpacing: "-0.02em" }}>{cur.label}</h1>
-          <span className="mono" style={{ fontSize: 11, color: "var(--text-faint)" }}>/ {cur.desc}</span>
+          <span className="mono topbar-desc" style={{ fontSize: 11, color: "var(--text-faint)" }}>/ {cur.desc}</span>
         </div>
       </div>
       <span style={{ flex: 1 }} />
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <span className="badge" style={{ height: 30, paddingInline: 11 }}>
+        <span className="badge topbar-live" style={{ height: 30, paddingInline: 11 }}>
           <span className="dot pulse" style={{ background: "var(--pos)", color: "var(--pos)" }} />
           <span style={{ color: "var(--text-muted)" }}>tiempo real</span>
         </span>
-        <kbd className="kbd" style={{ height: 30, display: "inline-flex", alignItems: "center", gap: 5 }}><I.search size={12} /> ⌘K</kbd>
+        <kbd className="kbd topbar-kbd" style={{ height: 30, display: "inline-flex", alignItems: "center", gap: 5 }}><I.search size={12} /> ⌘K</kbd>
         <button className="btn btn-ghost btn-icon" onClick={toggleTheme} title="Cambiar tema">
           {theme === "dark" ? <I.sun size={16} /> : <I.moon size={16} />}
         </button>
@@ -93,6 +100,7 @@ export default function App() {
   const [detail, setDetail] = useState(null);
   const [theme, setTheme] = useState(() => localStorage.getItem("orq_theme") || "light");
   const [noticias, setNoticias] = useState([]);
+  const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => { document.documentElement.dataset.theme = theme; localStorage.setItem("orq_theme", theme); }, [theme]);
   useEffect(() => { localStorage.setItem("orq_route", route); }, [route]);
@@ -112,7 +120,7 @@ export default function App() {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
   const login = (u) => { setUser(u); setAuthed(true); };
   const logout = () => { auth.clear(); setAuthed(false); setUser(null); };
-  const go = (r) => { setDetail(null); setRoute(r); window.scrollTo({ top: 0 }); };
+  const go = (r) => { setDetail(null); setRoute(r); setNavOpen(false); window.scrollTo({ top: 0 }); };
   const openNews = (n) => { setDetail(n); window.scrollTo({ top: 0 }); };
 
   if (!authed) return <Login onLogin={login} theme={theme} toggleTheme={toggleTheme} />;
@@ -127,9 +135,10 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar route={detail ? "feed" : route} go={go} user={user} onLogout={logout} />
+      <Sidebar route={detail ? "feed" : route} go={go} user={user} onLogout={logout} open={navOpen} />
+      <div className={"nav-backdrop" + (navOpen ? " on" : "")} onClick={() => setNavOpen(false)} />
       <div className="app-main">
-        <Topbar route={detail ? "feed" : route} theme={theme} toggleTheme={toggleTheme} />
+        <Topbar route={detail ? "feed" : route} theme={theme} toggleTheme={toggleTheme} onMenu={() => setNavOpen(true)} />
         <main className="app-content">{screen}</main>
       </div>
     </div>

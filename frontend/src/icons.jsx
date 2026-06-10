@@ -11,6 +11,7 @@ export const Icon = ({ d, fill, size = 18, sw = 1.7, ...p }) => (
 
 export const I = {
   feed:    (p) => <Icon {...p} d="M4 6h16M4 12h16M4 18h10" />,
+  menu:    (p) => <Icon {...p} d="M4 6h16M4 12h16M4 18h16" />,
   grid:    (p) => <Icon {...p} d={<><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></>} />,
   chat:    (p) => <Icon {...p} d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12Z" />,
   bell:    (p) => <Icon {...p} d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0" />,

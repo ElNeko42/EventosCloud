@@ -9,7 +9,7 @@ import { api } from "../api.js";
 function SourceRow({ f, onToggle }) {
   const salud = { ok: ["var(--pos)", "saludable"], lento: ["var(--neu)", "lento"], off: ["var(--text-faint)", "pausada"] }[f.salud] || ["var(--text-faint)", f.salud];
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "15px 18px", borderBottom: "1px solid var(--border)", opacity: f.activa ? 1 : 0.6 }}>
+    <div className="source-row" style={{ display: "flex", alignItems: "center", gap: 16, padding: "15px 18px", borderBottom: "1px solid var(--border)", opacity: f.activa ? 1 : 0.6 }}>
       <button onClick={() => onToggle(f.id)} className={"switch" + (f.activa ? " on" : "")}><span /></button>
       <span style={{ flex: "none", width: 36, height: 36, borderRadius: 8, background: "var(--surface-2)", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--border)" }}>
         <I.rss size={16} style={{ color: f.activa ? "var(--accent)" : "var(--text-faint)" }} />
@@ -65,16 +65,16 @@ export default function Sources() {
 
   return (
     <div className="fade-up" style={{ maxWidth: 1080 }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12, marginBottom: 22 }}>
+      <div className="stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12, marginBottom: 22 }}>
         <StatTile label="Fuentes activas" value={`${activas}/${fuentes.length}`} sub="RSS + Google Alerts" color="var(--accent)" icon={I.rss} />
         <StatTile label="Artículos hoy" value={total.toLocaleString("es")} sub="ingeridos a la cola" color="var(--pos)" icon={I.layers} />
         <StatTile label="Cron" value="EventBridge" sub="próx. lectura en 6 min" color="var(--neu)" icon={I.clock} />
       </div>
 
-      <form onSubmit={add} className="card" style={{ padding: 14, display: "flex", gap: 10, alignItems: "center", marginBottom: 18 }}>
+      <form onSubmit={add} className="card source-add" style={{ padding: 14, display: "flex", gap: 10, alignItems: "center", marginBottom: 18 }}>
         <I.plus size={16} style={{ color: "var(--accent)", marginLeft: 4, flex: "none" }} />
         <input value={nueva} onChange={(e) => setNueva(e.target.value)} placeholder="https://medio.com/feed.xml  ·  pega una URL de RSS para añadirla"
-          style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontSize: 13.5, color: "var(--text)", fontFamily: "var(--font-mono)" }} />
+          style={{ flex: 1, minWidth: 0, background: "transparent", border: "none", outline: "none", fontSize: 13.5, color: "var(--text)", fontFamily: "var(--font-mono)" }} />
         <button type="submit" className="btn btn-primary btn-sm" disabled={!nueva.trim()}>Añadir fuente</button>
       </form>
 

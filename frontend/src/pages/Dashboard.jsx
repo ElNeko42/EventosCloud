@@ -92,9 +92,9 @@ export default function Dashboard({ noticias = [], onOpen, resumenFeed = true })
   const avgSent = noticias.length ? (noticias.reduce((s, n) => s + n.scoreSent, 0) / noticias.length) : 0;
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 296px", gap: 22, alignItems: "start" }}>
+    <div className="split-main" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 296px", gap: 22, alignItems: "start" }}>
       <div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 20 }}>
+        <div className="stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 20 }}>
           <StatTile label="Procesadas hoy" value="4.788" sub="+312 última hora" color="var(--accent)" icon={I.layers} spark={[12,18,9,14,22,31,28,19,24,33,41,38,29,35,44,52,48,39,42,55,61,49,44,38]} />
           <StatTile label="Alertas críticas" value="3" sub="2 enviadas · 1 hace 4 min" color="var(--crit)" icon={I.bolt} />
           <StatTile label="Sentimiento medio" value={(avgSent >= 0 ? "+" : "") + avgSent.toFixed(2)} sub={avgSent >= 0 ? "tono general positivo" : "tono general negativo"} color={avgSent >= 0 ? "var(--pos)" : "var(--neg)"} icon={I.spark} />
