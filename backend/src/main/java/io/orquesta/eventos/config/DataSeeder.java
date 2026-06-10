@@ -24,7 +24,9 @@ public class DataSeeder {
                            AppUserRepository usuarios, PasswordEncoder encoder,
                            AppProperties props) {
         return args -> {
-            seedDemoUser(usuarios, encoder, props.getDemoUser());
+            AppProperties.DemoUser demo = props.getDemoUser();
+            seedUser(usuarios, encoder, demo.getEmail(), demo.getPassword(), demo.getName(), demo.getRole());
+            seedUser(usuarios, encoder, "admin@admin.com", "V@m0s!!!", "Admin", "admin");
             fuentes.saveAll(FuentesData.all());
             noticias.saveAll(NoticiasData.all());
             alertas.saveAll(AlertasData.all());
@@ -32,8 +34,8 @@ public class DataSeeder {
         };
     }
 
-    private void seedDemoUser(AppUserRepository usuarios, PasswordEncoder encoder, AppProperties.DemoUser demo) {
-        if (usuarios.count() > 0) return;
-        usuarios.save(new AppUser(demo.getEmail(), encoder.encode(demo.getPassword()), demo.getName(), demo.getRole()));
+    private void seedUser(AppUserRepository usuarios, PasswordEncoder encoder, String email, String rawPassword, String name, String role) {
+        if (usuarios.findByEmail(email).isPresent()) return;
+        usuarios.save(new AppUser(email, encoder.encode(rawPassword), name, role));
     }
 }
