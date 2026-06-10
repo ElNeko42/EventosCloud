@@ -1,0 +1,19 @@
+# ---- Java / Maven ----
+backend/target/
+*.class
+
+# ---- Node / Vite ----
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# ---- Env / secrets ----
+.env
+*.local
+
+# ---- IDE / OS ----
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
