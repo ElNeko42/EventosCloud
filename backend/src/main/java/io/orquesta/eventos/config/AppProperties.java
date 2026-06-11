@@ -9,11 +9,11 @@ public class AppProperties {
 
     private final Jwt jwt = new Jwt();
     private final Cors cors = new Cors();
-    private final DemoUser demoUser = new DemoUser();
+    private final AdminUser adminUser = new AdminUser();
 
     public Jwt getJwt() { return jwt; }
     public Cors getCors() { return cors; }
-    public DemoUser getDemoUser() { return demoUser; }
+    public AdminUser getAdminUser() { return adminUser; }
 
     public static class Jwt {
         private String secret;
@@ -30,11 +30,11 @@ public class AppProperties {
         public void setAllowedOrigins(String v) { this.allowedOrigins = v; }
     }
 
-    public static class DemoUser {
+    public static class AdminUser {
         private String email;
         private String password;
         private String name;
-        private String role;
+        private String role = "admin";
         public String getEmail() { return email; }
         public void setEmail(String v) { this.email = v; }
         public String getPassword() { return password; }

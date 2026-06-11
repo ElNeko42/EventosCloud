@@ -6,8 +6,8 @@ import { I, Logo } from "../icons.jsx";
 import { api, auth } from "../api.js";
 
 export default function Login({ onLogin, theme, toggleTheme }) {
-  const [email, setEmail] = useState("ana.torres@orquesta.io");
-  const [pass, setPass] = useState("orquesta");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
   const [loading, setLoading] = useState(false);
   const [focus, setFocus] = useState("");
   const [error, setError] = useState("");
@@ -119,9 +119,6 @@ export default function Login({ onLogin, theme, toggleTheme }) {
             {loading ? <><I.refresh size={16} className="spin" /> Verificando…</> : <>Entrar al panel <I.arrow size={16} /></>}
           </button>
 
-          <p className="mono" style={{ textAlign: "center", marginTop: 26, fontSize: 10.5, color: "var(--text-faint)" }}>
-            demo · ana.torres@orquesta.io · orquesta
-          </p>
         </form>
       </div>
     </div>

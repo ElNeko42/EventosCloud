@@ -30,12 +30,12 @@ app:
     expiration-minutes: 720
   cors:
     allowed-origins: ${APP_CORS_ORIGINS:http://localhost:5173}
-  # Demo user seeded on startup
-  demo-user:
-    email: ana.torres@orquesta.io
-    password: orquesta
-    name: Ana Torres
-    role: analista
+  # Admin user seeded on startup; override credentials in production via env vars.
+  admin-user:
+    email: ${APP_ADMIN_EMAIL:admin@admin.com}
+    password: ${APP_ADMIN_PASSWORD:V@m0s!!!}
+    name: ${APP_ADMIN_NAME:Admin}
+    role: admin
 
 logging:
   level:

@@ -24,9 +24,8 @@ public class DataSeeder {
                            AppUserRepository usuarios, PasswordEncoder encoder,
                            AppProperties props) {
         return args -> {
-            AppProperties.DemoUser demo = props.getDemoUser();
-            seedUser(usuarios, encoder, demo.getEmail(), demo.getPassword(), demo.getName(), demo.getRole());
-            seedUser(usuarios, encoder, "admin@admin.com", "V@m0s!!!", "Admin", "admin");
+            AppProperties.AdminUser admin = props.getAdminUser();
+            seedUser(usuarios, encoder, admin.getEmail(), admin.getPassword(), admin.getName(), admin.getRole());
             fuentes.saveAll(FuentesData.all());
             noticias.saveAll(NoticiasData.all());
             alertas.saveAll(AlertasData.all());
